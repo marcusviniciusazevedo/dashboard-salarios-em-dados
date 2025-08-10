@@ -1,4 +1,4 @@
-# Dashboard de Dados Salariais
+# Dashboard de Salários na Área de Dados
 Projeto para visualização de informações, utilizando Python, e bibliotecas como Pandas.
 
 ### Tecnologias
