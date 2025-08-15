@@ -5,7 +5,7 @@ import plotly.express as px
 # --- Configuração da Página ---
 # Define o título da página, o ícone e o layout para ocupar a largura inteira.
 st.set_page_config(
-    page_title="Dashboard de Salários na Área de Dados",
+    page_title="Dashboard dos Salários na Área de Dados",
     page_icon="📊",
     layout="wide",
 )
@@ -58,7 +58,7 @@ st.markdown("""
 
 
 # --- Conteúdo Principal ---
-st.title("Dashboard de Análise de Salários na Área de Dados")
+st.title("Dashboard dos Salários na Área de Dados")
 st.markdown("Explore os dados salariais na área de dados nos últimos anos. Utilize os filtros à esquerda para refinar sua análise.")
 
 # --- Métricas Principais (KPIs) ---
