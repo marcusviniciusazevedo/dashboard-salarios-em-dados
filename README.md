@@ -1,4 +1,4 @@
-# Dashboard de Salários na Área de Dados
+# Dashboard dos Salários na Área de Dados
 Projeto para visualização de informações, utilizando Python, e bibliotecas como Pandas.
 
 https://dashboard-salarios-em-dados-alura.streamlit.app/
