@@ -10,10 +10,10 @@ st.set_page_config(
     layout="wide",
 )
 
+
 # --- Carregamento dos dados ---
 df = pd.read_csv("https://raw.githubusercontent.com/vqrca/dashboard_salarios_dados/refs/heads/main/dados-imersao-final.csv")
 
-# --- Barra Lateral (Filtros) ---
 # --- Barra Lateral (Filtros) ---
 st.sidebar.header("🔍 Filtros")
 
@@ -42,8 +42,23 @@ df_filtrado = df[
     (df['tamanho_empresa'].isin(tamanhos_selecionados))
 ]
 
+st.markdown("""
+<style>
+/* Força a alteração da cor de fundo do botão do multiselect */
+.stMultiSelect div[data-baseweb="select"] div[role="button"] {
+    background-color: #ffd381 !important;
+}
+
+/* Força a alteração da cor de fundo dos chips selecionados */
+.stMultiSelect div[data-testid="stMultiSelectValue"] {
+    background-color: #ffd381 !important;
+}
+</style>
+""", unsafe_allow_html=True)
+
+
 # --- Conteúdo Principal ---
-st.title("🎲 Dashboard de Análise de Salários na Área de Dados")
+st.title("Dashboard de Análise de Salários na Área de Dados 💵")
 st.markdown("Explore os dados salariais na área de dados nos últimos anos. Utilize os filtros à esquerda para refinar sua análise.")
 
 # --- Métricas Principais (KPIs) ---
@@ -55,7 +70,7 @@ if not df_filtrado.empty:
     total_registros = df_filtrado.shape[0]
     cargo_mais_frequente = df_filtrado["cargo"].mode()[0]
 else:
-    salario_medio, salario_mediano, salario_maximo, total_registros, cargo_mais_comum = 0, 0, 0, ""
+    salario_medio, salario_maximo, total_registros, cargo_mais_frequente = 0, 0, 0, ""
 
 col1, col2, col3, col4 = st.columns(4)
 col1.metric("Salário médio", f"${salario_medio:,.0f}")
@@ -79,7 +94,9 @@ with col_graf1:
             y='cargo',
             orientation='h',
             title="Top 10 cargos por salário médio",
-            labels={'usd': 'Média salarial anual (USD)', 'cargo': ''}
+            labels={'usd': 'Média salarial anual (USD)', 'cargo': ''},
+            # Cor atualizada para o hex #00a347
+            color_discrete_sequence=['#00a347']
         )
         grafico_cargos.update_layout(title_x=0.1, yaxis={'categoryorder':'total ascending'})
         st.plotly_chart(grafico_cargos, use_container_width=True)
@@ -93,7 +110,9 @@ with col_graf2:
             x='usd',
             nbins=30,
             title="Distribuição de salários anuais",
-            labels={'usd': 'Faixa salarial (USD)', 'count': ''}
+            labels={'usd': 'Faixa salarial (USD)', 'count': ''},
+            # Cor atualizada para o hex #00a347
+            color_discrete_sequence=['#00a347']
         )
         grafico_hist.update_layout(title_x=0.1)
         st.plotly_chart(grafico_hist, use_container_width=True)
@@ -111,10 +130,22 @@ with col_graf3:
             names='tipo_trabalho',
             values='quantidade',
             title='Proporção dos tipos de trabalho',
-            hole=0.5
+            hole=0.5,
+            # Cor atualizada para o hex #00a347
+            color_discrete_sequence=[ '#006a2e', '#00a347', '#00cd59']
         )
         grafico_remoto.update_traces(textinfo='percent+label')
-        grafico_remoto.update_layout(title_x=0.1)
+        # Adiciona o ajuste da legenda para o lado esquerdo
+        grafico_remoto.update_layout(
+            title_x=0.1,
+            legend=dict(
+                orientation="v", # v para orientação vertical (padrão)
+                yanchor="middle", # Define o ponto de ancoragem vertical como o meio da legenda
+                y=0.5, # Posição vertical no centro do gráfico (0.5)
+                xanchor="left", # Define o ponto de ancoragem horizontal como o lado esquerdo
+                x=-0.2 # Mova a legenda para fora do gráfico para a esquerda. Ajuste este valor se precisar.
+            )
+        )
         st.plotly_chart(grafico_remoto, use_container_width=True)
     else:
         st.warning("Nenhum dado para exibir no gráfico dos tipos de trabalho.")
@@ -126,7 +157,8 @@ with col_graf4:
         grafico_paises = px.choropleth(media_ds_pais,
             locations='residencia_iso3',
             color='usd',
-            color_continuous_scale='rdylgn',
+            # Escala de cores atualizada para o gráfico de mapa para uma variante de verde
+            color_continuous_scale='Greens',
             title='Salário médio de Cientista de Dados por país',
             labels={'usd': 'Salário médio (USD)', 'residencia_iso3': 'País'})
         grafico_paises.update_layout(title_x=0.1)
