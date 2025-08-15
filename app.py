@@ -58,11 +58,11 @@ st.markdown("""
 
 
 # --- Conteúdo Principal ---
-st.title("Dashboard de Análise de Salários na Área de Dados 💵")
+st.title("Dashboard de Análise de Salários na Área de Dados")
 st.markdown("Explore os dados salariais na área de dados nos últimos anos. Utilize os filtros à esquerda para refinar sua análise.")
 
 # --- Métricas Principais (KPIs) ---
-st.subheader("Métricas gerais (Salário anual em USD)")
+st.subheader("Métricas gerais (Salário anual em USD) 💵")
 
 if not df_filtrado.empty:
     salario_medio = df_filtrado['usd'].mean()
